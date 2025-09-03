@@ -10,11 +10,11 @@ int main(){
     for(int i = 1; i <= 3; i++){ 
         
         //Uso de funciones lambda
-        thread hilo1([](){
+        thread hilo1([](){ // S1
             j = j + 10;
         });
 
-        thread hilo2([](){
+        thread hilo2([](){ // S2
             k = k + 100;
         });
 
