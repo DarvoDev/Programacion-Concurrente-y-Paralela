@@ -1,4 +1,4 @@
-//Ejercicio 2
+// Ejercicio 2
 #include <iostream>
 #include <thread>
 
