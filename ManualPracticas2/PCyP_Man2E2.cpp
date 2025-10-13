@@ -38,6 +38,7 @@ class Caja{
                     cout<<"La caja esta llena, observador vaciando "<<hojas<<" hojas."<<endl;
                     hojas = 0;
                     cv.notify_all();
+                    
                     lock.unlock();
                 }
             }

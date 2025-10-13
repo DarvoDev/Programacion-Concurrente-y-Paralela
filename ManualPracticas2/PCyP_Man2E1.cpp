@@ -2,6 +2,7 @@
 #include<thread>
 #include<mutex>
 #include<condition_variable>
+#define MAX_HILOS thread::hardware_concurrency()
 
 using namespace std;
 
@@ -24,7 +25,7 @@ class Sumatoria{
                 vc.wait(lk);
             }
             suma +=id;
-            cout<<"Hilo "<<id<<"suma: "<<id<<endl;
+            cout<<"Hilo "<<id<<" suma: "<<id<<endl;
             turno++;
             vc.notify_all();
             lk.unlock();
@@ -46,10 +47,25 @@ class Hilosum{
         void operator()(){ sumatoria.sumar(id);}
 };
 
+short validarSumatoria(){
+    short n;
+    bool valido = false;
+
+    while (!valido){
+        cout<<"Ingrese el valor de la sumatoria: ";
+        cin>>n;
+        if (n > MAX_HILOS || n<2){
+            cout<<"Error: debe ingresar un numero entre 2 y "<< MAX_HILOS<<endl; 
+        }else{
+            valido = true;
+        }
+    }
+    return n;
+}
+
 int main(){
-    int n;
-    cout<<"Ingrese el valor de la sumatoria: ";
-    cin>>n;
+    
+    short n = validarSumatoria();
 
     Sumatoria sumatoria(n);
 
