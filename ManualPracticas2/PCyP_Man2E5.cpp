@@ -88,20 +88,20 @@ class Cocinero{
     public:
         CalderoCompartido *caldero;
     
-        public:
-            CalderoCompartido(CalderoCompartido *caldero){
-                this->caldero = caldero;
-            }
+    public:
+        Cocinero(CalderoCompartido *caldero){  
+            this->caldero = caldero;
+        }
 
-            void operator()(){
-                while (true)
-                {
-                    caldero->rellenar();
-
-                    this_thread::sleep_for(chrono::milliseconds(1000));
-                }
+        void operator()(){
+            while (true)
+            {
+                caldero->rellenar();
+                this_thread::sleep_for(chrono::milliseconds(1000));
             }
+        }
 };
+
 
 int main(){
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -122,9 +122,8 @@ int main(){
         hilos.push_back(thread(Amigo(i+1, caldero)));
     }
 
-    thread hiloCocinero{
-        Cocinero(caldero);
-    }
+    thread hiloCocinero{Cocinero(caldero)};
+
 
     for(auto &t : hilos){
         t.join();
