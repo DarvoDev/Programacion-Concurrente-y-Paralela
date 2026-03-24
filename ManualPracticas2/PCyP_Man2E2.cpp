@@ -30,19 +30,16 @@ class Caja{
         }
 
         void VaciaCaja(){
-            while (true){
-                this_thread::sleep_for(chrono::milliseconds(100));
-                unique_lock<mutex> lock(candado);
-                if (hojas >= max)
-                {
-                    cout<<"La caja esta llena, observador vaciando "<<hojas<<" hojas."<<endl;
-                    hojas = 0;
-                    cv.notify_all();
-                    
-                    lock.unlock();
-                }
+        while (true){
+            unique_lock<mutex> lock(candado);
+            while (hojas < max){
+                cv.wait(lock);
             }
+            cout<<"La caja esta llena, observador vaciando "<<hojas<<" hojas."<<endl;
+            hojas = 0;
+            cv.notify_all();
         }
+}
 };
 
 void observador(Caja& caja){
@@ -57,7 +54,7 @@ int main(){
     srand(time(0));
     int num_personas=3;
     Caja caja;
-    thread personas[num_personas];
+    thread personas[num_personas];  
 
     for (int i = 0; i < num_personas; i++){
         personas[i] = thread(persona, i+1, ref(caja));

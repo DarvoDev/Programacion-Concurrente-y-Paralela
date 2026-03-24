@@ -11,7 +11,7 @@ using namespace std;
 
 mutex candado;
 condition_variable cv;
-int papel_Arroz = 0, tabaco = 0; cerillos = 0;
+int papel_Arroz = 0, tabaco = 0, cerillos = 0;
 
 void fumador(int id){
     while (true){
